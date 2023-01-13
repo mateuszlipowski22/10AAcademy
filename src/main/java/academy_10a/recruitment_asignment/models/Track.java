@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Time;
+import java.time.LocalTime;
 
 @Entity
 @Getter
@@ -18,5 +18,5 @@ public class Track {
     private String title;
 
     @Basic
-    private Time duration;
+    private LocalTime duration;
 }
