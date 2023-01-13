@@ -1,12 +1,15 @@
 package academy_10a.recruitment_asignment.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.sound.midi.Track;
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public class Album {
 
     @Id
@@ -21,5 +24,5 @@ public class Album {
     private Date releaseDate;
 
     @ManyToMany
-    private ArrayList<Track> tracks;
+    private List<Track> tracks;
 }
