@@ -11,4 +11,5 @@ public interface TrackRepository extends JpaRepository<Track, Long> {
 
     @Query(value = "SELECT * FROM ALBUM_TRACKS INNER JOIN TRACK ON TRACK.ID=ALBUM_TRACKS.TRACKS_ID WHERE ALBUM_ID=:albumID ORDER BY TITLE", nativeQuery = true)
     List<Track> findAllByAlbumID(@Param("albumID")Long albumID);
+
 }
