@@ -27,20 +27,32 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public AlbumDTO findAlbumDTOByID(Long ID) {
-        return convertAlbumIntoAlbumDTO(findAlbumByID(ID));
+        return convertAlbumIntoAlbumDTOWithDuration(findAlbumByID(ID));
     }
 
     @Override
     public List<AlbumDTO> findAllAlbumDTO() {
         return findAll()
                 .stream()
-                .map(this::convertAlbumIntoAlbumDTOWithDuration)
+                .map(this::convertAlbumIntoAlbumDTOWithoutTracks)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Album> findAll() {
         return albumRepository.findAll();
+    }
+
+    @Override
+    public AlbumDTO convertAlbumIntoAlbumDTOWithoutTracks(Album album) {
+        AlbumDTO albumDTO= new AlbumDTO(
+                album.getId(),
+                album.getPerformer(),
+                album.getTitle(),
+                album.getReleaseDate(),
+                null);
+        albumDTO.setAlbumDuration(getAlbumDuration(album));
+        return albumDTO;
     }
 
     @Override
@@ -57,13 +69,13 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public AlbumDTO convertAlbumIntoAlbumDTOWithDuration(Album album) {
         AlbumDTO albumDTO = convertAlbumIntoAlbumDTO(album);
-        albumDTO.setAlbumDuration(getAlbumDuration(albumDTO));
+        albumDTO.setAlbumDuration(getAlbumDuration(album));
         return albumDTO;
     }
 
     @Override
-    public String getAlbumDuration(AlbumDTO albumDTO){
-        Duration duration = albumDTO.getTracks().stream()
+    public String getAlbumDuration(Album album){
+        Duration duration = album.getTracks().stream()
                 .map(track -> Duration.between(LocalTime.of(0   , 0, 0), track.getDuration()))
                 .reduce(Duration.ZERO, Duration::plus);
         return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());

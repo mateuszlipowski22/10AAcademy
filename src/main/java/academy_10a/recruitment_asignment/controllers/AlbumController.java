@@ -12,12 +12,12 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/albums")
+@RequestMapping("/albums/")
 public class AlbumController {
 
     private final AlbumServiceImpl albumService;
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public AlbumDTO getAlbum(@PathVariable Long id){
         return albumService.findAlbumDTOByID(id);
     }

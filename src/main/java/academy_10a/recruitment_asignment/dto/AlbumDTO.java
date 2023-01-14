@@ -21,6 +21,7 @@ public class AlbumDTO {
 
     private Date releaseDate;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<TrackDTO> tracks;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
