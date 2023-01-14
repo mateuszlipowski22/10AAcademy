@@ -9,5 +9,7 @@ public interface TrackService {
 
     TrackDTO convertTrackIntoTrackDTO(Track track);
 
-    List<Track> findAllByAlbumID(Long ID);
+    List<Track> findAllByAlbumID(Long albumID);
+
+    List<TrackDTO> findAllTrackDTOByAlbumID(Long albumID);
 }

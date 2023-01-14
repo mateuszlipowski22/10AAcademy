@@ -17,9 +17,9 @@ public interface AlbumService {
 
     AlbumDTO convertAlbumIntoAlbumDTO(Album album);
 
-    AlbumDTO convertAlbumIntoAlbumDTOWithoutTracks(Album album);
+    AlbumDTO convertAlbumIntoAlbumDTOWithoutTracksWithDuration(Album album);
 
-    AlbumDTO convertAlbumIntoAlbumDTOWithDuration(Album album);
+    AlbumDTO convertAlbumIntoAlbumDTOWithTracksWithoutDuration(Album album);
 
     String getAlbumDuration(Album album);
 }

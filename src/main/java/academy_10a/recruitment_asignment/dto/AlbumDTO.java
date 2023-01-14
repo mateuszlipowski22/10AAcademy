@@ -27,11 +27,10 @@ public class AlbumDTO {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String albumDuration=null;
 
-    public AlbumDTO(Long id, String performer, String title, Date releaseDate, List<TrackDTO> tracks) {
+    public AlbumDTO(Long id, String performer, String title, Date releaseDate) {
         this.id = id;
         this.performer = performer;
         this.title = title;
         this.releaseDate = releaseDate;
-        this.tracks = tracks;
     }
 }

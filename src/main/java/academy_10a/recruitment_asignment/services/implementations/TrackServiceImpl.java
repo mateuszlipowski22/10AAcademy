@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -28,4 +29,14 @@ public class TrackServiceImpl implements TrackService {
     public List<Track> findAllByAlbumID(Long ID) {
         return trackRepository.findAllByAlbumID(ID);
     }
+
+    @Override
+    public List<TrackDTO> findAllTrackDTOByAlbumID(Long albumID) {
+        return findAllByAlbumID(albumID)
+                .stream()
+                .map(this::convertTrackIntoTrackDTO)
+                .collect(Collectors.toList());
+    }
+
+
 }

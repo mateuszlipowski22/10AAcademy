@@ -27,14 +27,14 @@ public class AlbumServiceImpl implements AlbumService {
 
     @Override
     public AlbumDTO findAlbumDTOByID(Long ID) {
-        return convertAlbumIntoAlbumDTOWithDuration(findAlbumByID(ID));
+        return convertAlbumIntoAlbumDTOWithTracksWithoutDuration(findAlbumByID(ID));
     }
 
     @Override
     public List<AlbumDTO> findAllAlbumDTO() {
         return findAll()
                 .stream()
-                .map(this::convertAlbumIntoAlbumDTOWithoutTracks)
+                .map(this::convertAlbumIntoAlbumDTOWithoutTracksWithDuration)
                 .collect(Collectors.toList());
     }
 
@@ -44,13 +44,8 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public AlbumDTO convertAlbumIntoAlbumDTOWithoutTracks(Album album) {
-        AlbumDTO albumDTO= new AlbumDTO(
-                album.getId(),
-                album.getPerformer(),
-                album.getTitle(),
-                album.getReleaseDate(),
-                null);
+    public AlbumDTO convertAlbumIntoAlbumDTOWithoutTracksWithDuration(Album album) {
+        AlbumDTO albumDTO= convertAlbumIntoAlbumDTO(album);
         albumDTO.setAlbumDuration(getAlbumDuration(album));
         return albumDTO;
     }
@@ -61,15 +56,15 @@ public class AlbumServiceImpl implements AlbumService {
                 album.getId(),
                 album.getPerformer(),
                 album.getTitle(),
-                album.getReleaseDate(),
-                album.getTracks().stream().map(trackService::convertTrackIntoTrackDTO).collect(Collectors.toList())
-        );
+                album.getReleaseDate());
     }
 
     @Override
-    public AlbumDTO convertAlbumIntoAlbumDTOWithDuration(Album album) {
+    public AlbumDTO convertAlbumIntoAlbumDTOWithTracksWithoutDuration(Album album) {
         AlbumDTO albumDTO = convertAlbumIntoAlbumDTO(album);
-        albumDTO.setAlbumDuration(getAlbumDuration(album));
+        albumDTO.setTracks(album.getTracks().stream()
+                .map(trackService::convertTrackIntoTrackDTO)
+                .collect(Collectors.toList()));
         return albumDTO;
     }
 
