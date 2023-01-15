@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class AlbumServiceImpl implements AlbumService {
 
+    private final LocalTime LOCAL_TIME_REF=LocalTime.of(0   , 0, 0);
     private final AlbumRepository albumRepository;
     private final TrackService trackService;
 
@@ -71,7 +72,7 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public String getAlbumDuration(Album album){
         Duration duration = album.getTracks().stream()
-                .map(track -> Duration.between(LocalTime.of(0   , 0, 0), track.getDuration()))
+                .map(track -> Duration.between(LOCAL_TIME_REF, track.getDuration()))
                 .reduce(Duration.ZERO, Duration::plus);
         return String.format("%02d:%02d:%02d", duration.toHours(), duration.toMinutesPart(), duration.toSecondsPart());
     }
